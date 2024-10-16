@@ -21,7 +21,6 @@ import PrivateRoute from './components/PrivateRoute'
             /*PRIVATE ROUTES */
             <Route  element={<PrivateRoute/>}>
               <Route path='/profile' element={<Profile/>} />
-              <Route path='/pro' element={<About/>} />
             </Route>
 
         </Routes>
