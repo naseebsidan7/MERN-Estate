@@ -5,6 +5,8 @@ import { app } from "../firebase";
 import { updateUserFailure, updateUserStart, updateUserSuccess, 
          deleteUserFailure, deleteUserStart, deleteUserSuccess,
          signOutUserFailure, signOutUserStart, signOutUserSuccess }  from '../redux/user/userSlice.js'
+import { Link } from 'react-router-dom'
+
 
 const Profile = () => {
     const { currentUser, loading, error } = useSelector((state) => state.user)
@@ -16,13 +18,14 @@ const Profile = () => {
     const [ updateSuccess, setUpdateSuccess ] = useState(false)
 
     const dispatch = useDispatch()
-    
 
     useEffect(()=>{
        if(file){
            handleFileUpload(file)
        }
     },[file])
+
+
 
     const handleFileUpload = (file) => {
          const storage = getStorage(app)
@@ -153,9 +156,12 @@ const Profile = () => {
         <input type="email"  placeholder="email"    id="email"    defaultValue={currentUser?.email}      onChange={handleChange} className="border p-3 rounded-lg"/>
         <input type="password" placeholder="password" onChange={handleChange} id="password" className="border p-3 rounded-lg"/>
         
-        <button disabled={loading} className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:bg-opacity-95 disabled:opacity-80" >
+        <button disabled={loading} className="bg-slate-700 text-white rounded-lg p-3 uppercase text-center hover:bg-opacity-95 disabled:opacity-80" >
            {loading? 'Loading...': 'Update'}
         </button>
+        <Link to={'/create-listing'}  className="bg-green-700 text-white rounded-lg p-3 text-center uppercase hover:bg-opacity-95 disabled:opacity-80" >
+              Create Listing
+        </Link>
       </form>
 
       <div className="flex justify-between mt-5">
