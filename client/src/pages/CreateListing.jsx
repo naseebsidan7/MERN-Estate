@@ -117,7 +117,7 @@ const CreateListing = () => {
         e.preventDefault()
         try {
             if(formData.imageUrls.length < 1 ) return setError('You must upload 1 image')
-            if(+formData.regularPrice <= +formData.discountPrice ) return setError('Discount Price must be lower than regular price ')
+            if(+formData.regularPrice < +formData.discountPrice ) return setError('Discount Price must be lower than regular price ')
             setError(false)
             setLoading(true);
 
@@ -198,22 +198,28 @@ const CreateListing = () => {
 
                      <div className=" flex items-center gap-2">
                           <input onChange={handleChange} value={formData.regularPrice} className="p-3 border border-gray-300 rounded-lg" 
-                          type="number" id="regularPrice" min='50' max='1000000' required/>
+                          type="number" id="regularPrice" min='50' max='10000000' required/>
                           
                           <div className="flex flex-col items-center">
                              <p>Regular Price</p>
-                             <span className="text-xs">($ / month )</span>
+                            { formData.type == 'rent' && (
+                                <span className="text-xs">
+                                    ($ / month )
+                                </span>
+                            )}
                           </div>
                      </div>
 
                     {formData.offer && (
                         <div className=" flex items-center gap-2">
                           <input onChange={handleChange} value={formData.discountPrice} className="p-3 border border-gray-300 rounded-lg" 
-                          type="number" id="discountPrice" min='0' max='100000' required/>
+                          type="number" id="discountPrice" min='0' max='10000000' required/>
                          
                           <div className="flex flex-col items-center">
                              <p>Discounted Price</p>
-                             <span className="text-xs">($ / month )</span>
+                             {formData.type === 'rent' && (
+                                <span className='text-xs'> ($ / month) </span>
+                            )}
                           </div>
                      </div>
                     )}

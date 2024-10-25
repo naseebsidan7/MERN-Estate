@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ListingCard from '../components/ListingCard'
 
 const Search = () => {
      const navigate = useNavigate()
@@ -14,9 +15,9 @@ const Search = () => {
      })
 
      const [loading, setLoading] = useState(false)
-     const [listing, setListing] = useState([])
+     const [listings, setListings] = useState([])
 
-     console.log(listing,'listing')
+
      const handleChange = (e) => {
           if(e.target.id === 'all' || e.target.id === 'rent' || e.target.id === 'sale' ){
                setSidebarData({...sidebarData, type: e.target.id })
@@ -90,8 +91,9 @@ const Search = () => {
           
           const res = await fetch(`/api/listing/get?${searchQuery}`);
           const data = await res.json()
-          setListing(data)
-          setLoading(false)} 
+          setLoading(false)
+          setListings(data)
+         } 
 
           fetchListing();
      }, [location.search])
@@ -155,8 +157,24 @@ const Search = () => {
                 <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 '>Search</button>
             </form>
         </div>
-        <div className=''>
+        <div className='flex-1'>
             <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>Listing Results:</h1>
+
+            <div className=' p-7 flex flex-wrap gap-4'>
+                 {!loading && listings.length === 0 && (
+                      <p className='text-xl text-red-500  '>No listing found!</p>
+                 )}
+                 {loading && (
+                     <div className='flex justify-center w-full my-10'>
+                       <div className="loader"></div>  
+                     </div>
+                 )}
+
+
+                 {!loading && listings && listings.map((listing) =>(
+                         <ListingCard key={listing._id} listing={listing} />
+                    ))}
+            </div>
         </div>
     </div>
   )

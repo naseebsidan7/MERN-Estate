@@ -113,10 +113,19 @@ const UpdateListing = () => {
             })
          }
 
-         if(e.target.id === 'parking' || e.target.id === 'furnished' || e.target.id === 'offer'){
+         if(e.target.id === 'parking' || e.target.id === 'furnished' ){
             setFormData({
                 ...formData,
-                [e.target.id]: e.target.checked
+                [e.target.id]: e.target.checked,
+            
+            })
+         }
+
+         if(e.target.id === 'offer'){
+            setFormData({
+                ...formData,
+                [e.target.id]: e.target.checked,
+                discountPrice: 0
             })
          }
 
@@ -133,7 +142,7 @@ const UpdateListing = () => {
         e.preventDefault()
         try {
             if(formData.imageUrls.length < 1 ) return setError('You must upload 1 image')
-            if(+formData.regularPrice <= +formData.discountPrice ) return setError('Discount Price must be lower than regular price ')
+            if(+formData.regularPrice < +formData.discountPrice ) return setError('Discount Price must be lower than regular price ')
             setError(false)
             setLoading(true);
 
@@ -259,7 +268,7 @@ const UpdateListing = () => {
                         </div>
                     ))
                  }
-                 <button disabled={loading || uploading} className="bg-slate-700 mt-3 rounded-lg text-white p-3 uppercase hover:opacity-95 disabled:opacity-80">{loading? 'Creating': 'Create Listing'}</button>
+                 <button disabled={loading || uploading} className="bg-slate-700 mt-3 rounded-lg text-white p-3 uppercase hover:opacity-95 disabled:opacity-80">{loading? 'Updating': 'Update Listing'}</button>
                  {error && <p className="text-red-700 text-sm">{error}</p>}
              </div>
             

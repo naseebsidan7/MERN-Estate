@@ -12,7 +12,7 @@
    z-index: 9999;
    display: grid;
    place-content: center;
- 
+   
  }
 
  .loader{
